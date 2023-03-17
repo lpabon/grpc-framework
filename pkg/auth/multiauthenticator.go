@@ -1,3 +1,18 @@
+/*
+Copyright 2022 Portworx
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package auth
 
 import (
@@ -7,6 +22,11 @@ import (
 
 type multiAuthenticatorImpl struct {
 	authenticators map[string][]Authenticator
+}
+
+func NewMultiAuthenticatorDefault() (MultiAuthenticatorWithClientID, error) {
+	authenticators := make(map[string][]Authenticator)
+	return NewMultiAuthenticator(authenticators)
 }
 
 // NewMultiAuthenticator maintains a list of authenticators for a given issuer.
@@ -28,6 +48,13 @@ func NewMultiAuthenticator(
 
 func (m *multiAuthenticatorImpl) GetAuthenticators(issuer string) []Authenticator {
 	return m.authenticators[issuer]
+}
+
+func (m *multiAuthenticatorImpl) AddAuthenticator(issuer string, authenticator Authenticator) {
+	if val, ok := m.authenticators[issuer]; !ok || val == nil {
+		m.authenticators[issuer] = make([]Authenticator, 1)
+	}
+	m.authenticators[issuer] = append(m.authenticators[issuer], authenticator)
 }
 
 func (m *multiAuthenticatorImpl) ListIssuers() []string {

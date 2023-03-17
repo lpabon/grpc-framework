@@ -60,8 +60,8 @@ type Authenticator interface {
 // to manage multiple such authenticators based on the unique combination of issuer
 // and clientID.
 type MultiAuthenticatorWithClientID interface {
-	Authenticator
-	GetAuthenticators(issuer string) []Authenticator
+	AddAuthenticator(string, Authenticator)
+	GetAuthenticators(string) []Authenticator
 	ListIssuers() []string
 }
 
