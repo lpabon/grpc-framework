@@ -35,7 +35,7 @@ GFPROTOC=26.1
 
 # Get gRPC golang versions from here: https://grpc.io/docs/languages/go/quickstart/
 # Also see: https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go
-GFPROTOCGENGO=1.32.0
+GFPROTOCGENGO=1.34.1
 # Also see: https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc
 GFPROTOCGENGOGRPC=1.3.0
 
